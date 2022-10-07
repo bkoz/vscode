@@ -1,7 +1,9 @@
 from flask import Flask
 import psycopg
 import os
+import logging
  
+logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 
 
@@ -9,13 +11,17 @@ app = Flask(__name__)
 def hello():
 
     dbname = os.getenv('POSTGRESQL_DATABASE')
-    print(f"dbname = {dbname}")
-    # Get these from the env
+    user = os.getenv('POSTGRESQL_USER')
+    password = os.getenv('POSTGRESQL_PASSWORD')
+    logging.info(f"POSTGRESQL_DATABASE = {dbname}")
+    logging.info(f"POSTGRESQL_USER = {user}")
+    logging.info(f"POSTGRESQL_PASSWORD = {password}")
+
     params = {
-    'dbname': 'sampledb',
-    'user': 'user3AC',
-    'password': '4aE7FULrxjXrsyA1',
-    'host': 'postgresql.python-test.svc.cluster.local',
+    'dbname': dbname,
+    'user': user,
+    'password': password,
+    'host': 'postgresql.python-test',
     'port': 5432
     }
 
@@ -23,11 +29,10 @@ def hello():
 
     cur = conn.cursor()
     dict_cur = cur.execute("SELECT * FROM staff")
-    print(f"dict_cur = {dict_cur}")
     record = dict_cur.fetchone()
-    print(f"record = {record}")
+    logging.info(f"one database record = {record}")
+    # Return the email field.
     ret = record[4]
-    print(f"return = {ret}")
     return ret
 
 if __name__ == '__main__':
