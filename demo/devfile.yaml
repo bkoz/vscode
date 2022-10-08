@@ -35,14 +35,14 @@ components:
     env:
     - name: DEBUG_PORT
       value: "5858"
-    - name: POSTGRESQL_DATABASE 
-      value: "sampledb"
-    - name: POSTGRESQL_USER
-      value: postgresql
-    - name: POSTGRESQL_PASSWORD
-      value: postgresql
     - name: POSTGRESQL_SERVICE_HOST
-      value: postgresql.bktest01
+      value: "postgresql.bktest01"
+    - name: POSTGRESQL_DATABASE 
+      value: postgres
+    - name: POSTGRESQL_USER
+      value: postgres
+    - name: POSTGRESQL_PASSWORD
+      value: postgres
     image: registry.access.redhat.com/ubi9/python-39:latest
     mountSources: true
   name: py-web
