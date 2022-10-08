@@ -9,8 +9,14 @@ oc rsync data postgresql-1-878q8:/var/tmp
 
 oc rsh postgresql-pod
 
+Connect
+psql $POSTGRESQL_DATABASE $POSTGRESQL_USER
+
 Works but errors out
 pg_restore -U $POSTGRESQL_USER -d $POSTGRESQL_DATABASE /var/tmp/data/dvdrental.tar
+
+Show databases
+default=> \l
 
 Confirm there are tables and rows.
 psql $POSTGRESQL_DATABASE $POSTGRESQL_USER
