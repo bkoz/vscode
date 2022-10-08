@@ -1,5 +1,51 @@
 Using vscode with python on Openshift
 
+Simple app that connects and logs the host address.
+```
+from flask import Flask
+import logging
+import psycopg
+import os
+
+
+logging.basicConfig(level=logging.INFO)
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    logging.info("called hello endpoint")
+
+
+    dbname = os.getenv('POSTGRESQL_DATABASE')
+    user = os.getenv('POSTGRESQL_USER')
+    password = os.getenv('POSTGRESQL_PASSWORD')
+    logging.info(f"POSTGRESQL_DATABASE = {dbname}")
+    logging.info(f"POSTGRESQL_USER = {user}")
+    logging.info(f"POSTGRESQL_PASSWORD = {password}")
+
+    #
+    # Make sure the service name and namespace are correct.
+    # Should probably just read the POSTGRESQL_SERVICE_HOST env varible
+    #
+    params = {
+    'dbname': 'postgres',
+    'user': 'postgres',
+    'password': 'postgres',
+    'host': 'postgresql.bktest01',
+    'port': 5432
+    }
+
+    conn = psycopg.connect(**params)
+    logging.info(f"connection = {conn.info.hostaddr}")
+
+
+    return "Hello Python!"
+
+if __name__ == '__main__':
+    app.run(port=8080,host='0.0.0.0')
+```
+
 ```
 oc new-app python-test
 
