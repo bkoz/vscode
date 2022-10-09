@@ -29,7 +29,13 @@ def hello():
     'port': 5432
     }
 
-    conn = psycopg.connect(**params)
+    try:
+        conn = psycopg.connect(**params)
+    except psycopg.OperationalError:
+        logging.info("DB Connection Failed!")
+        logging.info("Exiting.")
+        exit()
+
     logging.info(f"connection = {conn.info.hostaddr}")
 
 

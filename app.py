@@ -25,7 +25,10 @@ def hello():
     'port': 5432
     }
 
-    conn = psycopg.connect(**params)
+    try:
+        conn = psycopg.connect(**params)
+    except psycopg.OperationalError:
+        logging.info("DB Connection Failed!")
 
     cur = conn.cursor()
     dict_cur = cur.execute("SELECT * FROM staff")
