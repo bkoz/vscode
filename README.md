@@ -1,5 +1,7 @@
 Using vscode with python on Openshift
 
+Install the version 3 [odo client](https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo).
+
 See the `demo` directory for a simple app that connects 
 to postgresql then logs and returns the host address. 
 Service discovery is provided via environment variables.
